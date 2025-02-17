@@ -2,20 +2,452 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  font-family: "SofiaPro", sans-serif;
+  /* background-color: #000; */
 }
 
-@media (prefers-color-scheme: dark) {
+/* Custom scrollbar for Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  /* background: #1e1e1e;  */
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  /* background: #efb036; */
+  background: #f4ce14;
+  /* background: linear-gradient(
+    333deg,
+    rgba(158, 0, 255, 1) 0%,
+    rgba(46, 185, 223, 1) 100%
+  ); */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Handle color on hover */
+}
+
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    --g-color-black: #000;
+    --g-color-white: #fff;
+
+    --g-color-grey-100: #f1f2f4;
+    --g-color-grey-600: #5d636f;
+    --g-color-grey-700: #434851;
+    --g-color-grey-900: #121417;
+
+    --g-box-shadow: 0px 6px 12px rgba(18, 20, 23, 0.06),
+      0px 15px 24px rgba(18, 20, 23, 0.07), 0px -4px 12px rgba(18, 20, 23, 0.05);
+
+    --g-font-family: "Helvetica";
+
+    --g-font-size-x-small: 0.75rem; /* 12px */
+    --g-font-size-small: 0.875rem; /* 14px */
+    --g-font-size-base: 1rem; /* 16px */
+    --g-font-size-large: 1.25rem; /* 20x */
+    --g-font-size-x-large: 1.5rem; /* 24px */
+    --g-font-size-2x-large: 2rem; /* 32px */
+    --g-font-size-3x-large: 2.5rem; /* 40px */
+    --g-font-size-4x-large: 4rem; /* 64px */
+
+    --g-font-weight-base: 400;
+    --g-font-weight-semi-bold: 500;
+    --g-font-weight-bold: 600;
+    --g-font-weight-black: 700;
+
+    --g-border-radius-small: 0.5rem;
+    --g-border-radius-base: 1rem;
+    --g-border-radius-large: 1.5rem;
+
+    --g-spacing-small: 0.5rem; /* 8px */
+    --g-spacing-base: 1rem; /* 16px */
+    --g-spacing-large: 1.5rem; /* 24px */
+    --g-spacing-x-large: 2rem; /* 32px */
+    --g-spacing-2x-large: 2.5rem; /* 40px */
+    --g-spacing-3x-large: 3rem; /* 48px */
+    --g-spacing-6x-large: 6rem; /* 96px */
+  }
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.avatar {
+  align-items: center;
+  background-color: var(--g-color-grey-100);
+  border-radius: var(--g-border-radius-large);
+  display: flex;
+  height: var(--g-spacing-3x-large);
+  justify-content: center;
+  text-align: center;
+  width: var(--g-spacing-3x-large);
+}
+
+.user-profile:hover {
+  transform: translateY(-5px);
+  border-radius: 100%;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Active: Press down */
+.user-profile:active {
+  transform: translateY(2px);
+  border-radius: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+Base styling for navigation links .nav-link {
+  position: relative;
+  font-size: 1.125rem; /* Equivalent to text-lg */
+  color: #4a4a4a; /* Default color: gray-700 */
+  transition: all color 0.2s ease;
+}
+
+/* Active link styles */
+.nav-link.active {
+  font-weight: 700; /* Bold text for active link */
+  color: #22c55e; /* green-500 */
+}
+
+/* Hover effect: underline animation */
+.nav-link:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #22c55e; /* green-500 */
+  transition: width 2s ease;
+  width: 100%;
+}
+
+/* Active underline (fixed for active link) */
+.nav-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #22c55e; /* green-500 */
+}
+
+/* Base styling for navigation links (Red theme) */
+.nav-link-red {
+  position: relative;
+  font-size: 1.125rem; /* Equivalent to text-lg */
+  color: #4a4a4a; /* Default color: gray-700 */
+  transition: color 0.2s ease;
+}
+
+/* Active link styles (Red active state) */
+.nav-link-red.active {
+  font-weight: 700; /* Bold text for active link */
+  color: #ef4444; /* red-500 */
+}
+
+/* Hover effect: underline animation (Red theme) */
+.nav-link-red:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #ef4444; /* red-500 */
+  transition: width 0.3s ease;
+  width: 100%;
+}
+
+/* Active underline (fixed for active link - Red theme) */
+.nav-link-red.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #ef4444; /* red-500 */
+}
+
+.nav-tabs {
+  position: relative;
+  /* margin: 0 20px; */
+  /* vertical-align: 100rem; */
+}
+
+.nav-tabs:link,
+.nav-tabs:visited {
+  /* font-family: "Raleway", sans-serif; */
+  /* letter-spacing: 1.5px; */
+  /* font-weight: 400;
+  font-size: 1.25rem; */
+  position: relative;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  /* font-family: 'Josefin Sans', sans-serif; */
+  /* font-weight: 100; */
+}
+
+.nav-tabs.active:after {
+  content: "";
+  display: inline-block;
+  height: 10%;
+  width: 104%;
+  /* border-radius: 10px; */
+  opacity: 1;
+  position: absolute;
+  bottom: -20%;
+  left: -1%;
+  color: #000;
+  /* background-image: linear-gradient(
+    132deg,
+    #c70039 10%,
+    rgba(233, 87, 51, 1) 100%
+  ); */
+  background-image: linear-gradient(90deg, #efb036 20%, #3b6790 72%);
+}
+
+.nav-tabs:hover {
+  color: #eeeeee !important;
+  /* color: red; */
+}
+
+.nav-tabs::after {
+  content: "";
+  display: inline-block;
+  height: 12%;
+  width: 0;
+  /* border-radius: 10px; */
+  opacity: 0;
+  position: absolute;
+  bottom: -20%;
+  left: -1%;
+  z-index: 2;
+  transition: all 0.8s;
+  background-image: linear-gradient(259deg, #3282b8 18%, #f05454 82%);
+  /* background-image: linear-gradient(
+    132deg,
+    #c70039 10%,
+    rgba(233, 87, 51, 1) 100%
+  ); */
+}
+
+.nav-tabs:hover::after {
+  opacity: 1;
+  height: 12%;
+  width: 104%;
+}
+
+.nameText::after {
+  content: "";
+  display: inline-block;
+  height: 12%;
+  width: 0;
+  /* border-radius: 10px; */
+  opacity: 1;
+  position: absolute;
+  bottom: -20%;
+  left: -1%;
+  z-index: 2;
+  transition: all 0.8s;
+  background-image: linear-gradient(259deg, #3282b8 18%, #f05454 82%);
+  /* background-image: linear-gradient(
+    132deg,
+    #c70039 10%,
+    rgba(233, 87, 51, 1) 100%
+  ); */
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-UltraLight.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-ExtraLight.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Semi-Bold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Black.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-UltraLight-Italic.otf")
+    format("opentype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-ExtraLight-Italic.otf")
+    format("opentype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Light-Italic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Regular-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Medium-Italic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Semi-Bold-Italic.otf") format("opentype");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Bold-Italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SofiaPro";
+  src: url("/fonts/sofia-pro/Sofia-Pro-Black-Italic.otf") format("opentype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+.bg-dot-white {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.5) 1px,
+    transparent 1px
+  );
+  background-size: 10px 10px;
+}
+
+.bg-dot-black {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 1px);
+  background-size: 10px 10px;
 }
