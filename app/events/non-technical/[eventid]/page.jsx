@@ -169,7 +169,7 @@ const NonTechnicalEventDetail = () => {
               disabled={!event.open}
               className={`px-8 py-3 rounded-lg text-white transition-opacity ${
                 event.open && event.availability > 0
-                  ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90"
+                  ? "bg-gradient-to-br from-[#3282b8] to-[#f05454] hover:opacity-90"
                   : "bg-gray-600 cursor-not-allowed"
               }`}
             >
