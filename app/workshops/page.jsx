@@ -149,10 +149,10 @@ const Workshops = () => {
       ) : (
         <Navbar />
       )}
-      <div className="h-[calc(100vh-5rem)] overflow-hidden">
+      <div className="h-[calc(100vh-4rem)] overflow-hidden">
         <BentoGridHome shouldAnimate={shouldAnimate} />
       </div>
-      <div className="m-6">
+      <div className="">
         <WorkshopGrid />
       </div>
     </div>

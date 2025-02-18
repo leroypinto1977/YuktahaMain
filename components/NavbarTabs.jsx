@@ -12,11 +12,11 @@ export default function NavbarTabs({ isAuthenticated, user }) {
     { href: "/", label: "Home" },
     { href: "/workshops", label: "Workshops" },
     { href: "/events", label: "Events" },
-    { href: "/about", label: "About" },
+    { href: "/ambassador", label: "Student Ambassador" },
   ];
 
   const privateNavLinks = [
-    { href: "/dashboard", label: "Dashboard" },
+    // { href: "/dashboard", label: "Dashboard" },
     { href: "/profile", label: "Profile" },
   ];
 

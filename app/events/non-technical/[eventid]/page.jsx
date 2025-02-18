@@ -65,13 +65,13 @@ const NonTechnicalEventDetail = () => {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-8 shadow-xl">
           {event.outer_Img && (
-            <div className="mb-8">
+            <div className="mb-8 flex justify-center">
               {/* Image Container with 16:9 Aspect Ratio */}
-              <div className="w-full aspect-video overflow-hidden rounded-xl">
+              <div className="max-w-5xl aspect-video overflow-hidden rounded-xl">
                 <img
                   src={event.outer_Img}
                   alt={event.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover "
                 />
               </div>
             </div>
@@ -169,7 +169,7 @@ const NonTechnicalEventDetail = () => {
               disabled={!event.open}
               className={`px-8 py-3 rounded-lg text-white transition-opacity ${
                 event.open && event.availability > 0
-                  ? "bg-gradient-to-br from-[#3282b8] to-[#f05454] hover:opacity-90"
+                  ? "bg-gradient-to-l from-[rgb(50,130,184)] to-[#f05454] hover:opacity-90"
                   : "bg-gray-600 cursor-not-allowed"
               }`}
             >

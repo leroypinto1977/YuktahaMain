@@ -200,10 +200,10 @@ const Events = () => {
       ) : (
         <Navbar className="pb-0" />
       )}
-      <div className="h-[calc(100vh-5rem)] overflow-hidden">
+      <div className="h-[calc(100vh-4rem)] overflow-hidden">
         <BentoGridEventsHome shouldEventsAnimate={shouldEventsAnimate} />
       </div>
-      <div className="m-6">
+      <div className="">
         <EventGrid />
       </div>
     </div>

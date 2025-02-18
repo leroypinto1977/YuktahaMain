@@ -201,7 +201,7 @@ const WorkshopGrid = () => {
   }
 
   return (
-    <section className="w-full px-4 py-16 bg-black">
+    <section className="w-full px-4 py-16 bg-gradient-to-br from-neutral-800 to-neutral-900">
       <motion.h2
         className="text-4xl font-bold text-center text-white mb-12"
         initial={{ opacity: 0, y: 20 }}
@@ -219,8 +219,9 @@ const WorkshopGrid = () => {
             <motion.div
               key={workshop.workshopid}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.3 }}
+              viewport={{ once: true }}
               whileHover={{ scale: 1 }}
             >
               <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden">
@@ -258,7 +259,6 @@ const WorkshopGrid = () => {
                 <CardFooter className="flex justify-end">
                   <Button
                     className="group items-center pt-2 pb-2"
-                    variant="secondary"
                     onClick={() => {
                       router.push(`/workshops/${workshop.workshopid}`);
                     }}

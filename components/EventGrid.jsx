@@ -58,7 +58,7 @@ const EventGrid = () => {
   }
 
   return (
-    <section className="w-full px-4 py-16 bg-black">
+    <section className="w-full px-4 py-16  bg-gradient-to-br from-neutral-800 to-neutral-900">
       <motion.h2
         className="text-4xl font-bold text-center text-white mb-12"
         initial={{ opacity: 0, y: 20 }}
@@ -94,7 +94,8 @@ const EventGrid = () => {
             <motion.div
               key={event.eventid}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               whileHover={{ scale: 1 }}
             >
@@ -131,7 +132,6 @@ const EventGrid = () => {
                 <CardFooter className="flex justify-end">
                   <Button
                     className="group items-center pt-2 pb-2"
-                    variant="secondary"
                     onClick={() => {
                       router.push(
                         `/events/${

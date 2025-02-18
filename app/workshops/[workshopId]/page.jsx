@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { BackgroundBeams } from "@/components/acertinity_ui/background-beams.jsx";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -9,6 +10,8 @@ const WorkshopDetail = () => {
   const [workshop, setWorkshop] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
+
+  const { user } = useKindeBrowserClient();
 
   const { workshopId } = useParams();
   const numericWorkshopId = workshopId ? parseInt(workshopId, 10) : null;
@@ -36,6 +39,80 @@ const WorkshopDetail = () => {
 
     fetchWorkshop();
   }, [numericWorkshopId]);
+
+  const handleRegister = async (user, numericWorkshopId) => {
+    try {
+      // First fetch user details
+      const userResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
+        { cache: "no-store" }
+      );
+
+      if (!userResponse.ok) {
+        const errorData = await userResponse.text();
+        throw new Error(`Failed to fetch user details: ${errorData}`);
+      }
+
+      const userDetails = await userResponse.json();
+
+      // Prepare workshop registration payload
+      const registrationPayload = {
+        userDetails: {
+          yuktahaId: userDetails.yuktahaId,
+          firstName: userDetails.firstName,
+          email: userDetails.email,
+          phoneNumber: userDetails.phoneNumber,
+          college: userDetails.college,
+        },
+        workshopId: numericWorkshopId,
+      };
+
+      // Register for workshop
+      const workshopResponse = await fetch("/api/workshop/registerWorkshop", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registrationPayload),
+      });
+
+      // First try to get the response as text
+      const responseText = await workshopResponse.text();
+
+      // Then parse it as JSON if possible
+      let workshopData;
+      try {
+        workshopData = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse response:", responseText);
+        throw new Error("Invalid response format");
+      }
+
+      if (workshopResponse.ok) {
+        alert("Workshop registered successfully!");
+        return {
+          success: true,
+          message: "Workshop registered successfully!",
+          data: workshopData,
+        };
+      } else {
+        alert(workshopData.message || "Failed to register for workshop");
+        return {
+          success: false,
+          message: workshopData.message,
+          error: workshopData,
+        };
+      }
+    } catch (error) {
+      console.error("Error registering for workshop:", error);
+      alert("An error occurred while registering for the workshop.");
+      return {
+        success: false,
+        message: "An error occurred while registering for the workshop.",
+        error: error.message,
+      };
+    }
+  };
 
   if (loading) {
     return (
@@ -67,13 +144,13 @@ const WorkshopDetail = () => {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl p-8 shadow-xl">
           {workshop.outer_Img && (
-            <div className="mb-8">
+            <div className="mb-8 flex justify-center">
               {/* Image Container with 16:9 Aspect Ratio */}
-              <div className="w-full aspect-video overflow-hidden rounded-xl">
+              <div className="max-w-5xl aspect-video overflow-hidden rounded-xl">
                 <img
                   src={workshop.outer_Img}
                   alt={workshop.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover "
                 />
               </div>
             </div>
@@ -113,12 +190,6 @@ const WorkshopDetail = () => {
                     <span className="font-medium text-white">Fees:</span> ₹
                     {workshop.fees}
                   </p>
-                  {/* <p className="text-gray-400">
-                    <span className="font-medium text-white">
-                      Availability:
-                    </span>{" "}
-                    {workshop.availability}/{workshop.limit} spots
-                  </p> */}
                 </div>
               </div>
 
@@ -170,9 +241,10 @@ const WorkshopDetail = () => {
           <div className="mt-8">
             <button
               disabled={!workshop.open}
+              onClick={() => handleRegister(user, numericWorkshopId)}
               className={`px-8 py-3 rounded-lg text-white transition-opacity ${
                 workshop.open && workshop.availability > 0
-                  ? "bg-gradient-to-br from-[#3282b8] to-[#f05454] hover:opacity-90"
+                  ? "bg-gradient-to-l from-[#3282b8] to-[#f05454] hover:opacity-90"
                   : "bg-gray-600 cursor-not-allowed"
               }`}
             >

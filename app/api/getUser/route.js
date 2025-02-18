@@ -1,19 +1,56 @@
+// import { connectToDatabase } from "@/lib/mongodb";
+// import UserDetails from "@/models/UserDetails";
+
+// export default async function handler(req, res) {
+//   await connectToDatabase();
+
+//   if (req.method === "GET") {
+//     const { email } = req.query;
+//     console.log("Email: ", email);
+//     const user = await UserDetails.findOne({ email });
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     res.status(200).json(user);
+//   } else {
+//     res.status(405).json({ message: "Method Not Allowed" });
+//   }
+// }
+
+// app/api/getUser/route.js
 import { connectToDatabase } from "@/lib/mongodb";
 import UserDetails from "@/models/UserDetails";
+import { NextResponse } from "next/server";
 
-export default async function handler(req, res) {
-  await connectToDatabase();
+export async function GET(request) {
+  try {
+    await connectToDatabase();
 
-  if (req.method === "GET") {
-    const { email } = req.query;
+    // Get email from the URL using searchParams
+    const { searchParams } = new URL(request.url);
+    const email = searchParams.get("email");
+
+    if (!email) {
+      return NextResponse.json(
+        { message: "Email is required" },
+        { status: 400 }
+      );
+    }
+
     const user = await UserDetails.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    res.status(200).json(user);
-  } else {
-    res.status(405).json({ message: "Method Not Allowed" });
+    return NextResponse.json(user);
+  } catch (error) {
+    console.error("Database error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

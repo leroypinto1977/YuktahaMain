@@ -1,24 +1,260 @@
+// "use client";
+
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Input } from "@/components/ui/input";
+// import { Check } from "lucide-react";
+// import React, { useState } from "react";
+
+// const UserProfile = ({ user, userDetails }) => {
+//   const [isEditing, setIsEditing] = useState(false);
+//   const [formData, setFormData] = useState({
+//     firstName: userDetails.firstName,
+//     lastName: userDetails.lastName,
+//     college: userDetails.college,
+//     phoneNumber: userDetails.phoneNumber,
+//   });
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({
+//       ...formData,
+//       [name]: value,
+//     });
+//   };
+
+//   const handleSaveChanges = async () => {
+//     try {
+//       const response = await fetch("/api/updateUser", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           email: user.email,
+//           ...formData,
+//         }),
+//       });
+
+//       if (response.ok) {
+//         setIsEditing(false);
+//         alert("User details updated successfully!");
+//       } else {
+//         alert("Failed to update user details.");
+//       }
+//     } catch (error) {
+//       console.error("Error updating user details:", error);
+//       alert("An error occurred while updating user details.");
+//     }
+//   };
+
+//   return (
+//     <Card className="w-full max-w-xl bg-black/90 border-zinc-600 border-4 text-white rounded-[24px] p-6">
+//       <div className="relative">
+//         <div className="h-40 -mt-[16px] -mx-[16px] rounded-[16px] bg-gradient-to-r from-[#f05454] to-[#3282b8] opacity-100" />
+//         <div className="relative items-center gap-4 mb-8">
+//           <div className="relative w-24 h-24">
+//             <img
+//               src={user.picture}
+//               alt="Profile"
+//               className="w-24 h-24 -mt-[45px] rounded-full border-5 border-black "
+//             />
+//           </div>
+
+//           <div className="relative flex-1">
+//             <div className="flex items-center gap-4 mb-1">
+//               <h2 className="text-2xl font-semibold">
+//                 {userDetails.firstName} {userDetails.lastName}
+//               </h2>
+//             </div>
+//             <p className="text-gray-400">{user.email}</p>
+//           </div>
+//         </div>
+//         <div className="grid grid-cols-4 gap-4 mb-8">
+//           {[
+//             { label: "Yuktaha ID", value: userDetails.yuktahaId },
+//             {
+//               label: "Workshops registered",
+//               value: userDetails.workshopsRegistered,
+//             },
+//             {
+//               label: "Technical events registered",
+//               value: userDetails.technicalEventsRegistered,
+//             },
+//             {
+//               label: "Non-Technical events",
+//               value: userDetails.nonTechnicalEvents,
+//             },
+//           ].map((stat) => (
+//             <div key={stat.label}>
+//               <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
+//               <p className="font-medium">{stat.value}</p>
+//             </div>
+//           ))}
+//         </div>
+//         <div className="space-y-6">
+//           <div className="grid grid-cols-2 gap-4">
+//             <div>
+//               <label className="block text-sm mb-2">First Name</label>
+//               <Input
+//                 type="text"
+//                 name="firstName"
+//                 value={formData.firstName}
+//                 className="w-full bg-gray-800 h-11 rounded-lg p-3"
+//                 onChange={handleInputChange}
+//                 readOnly={!isEditing}
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-sm mb-2">Last Name</label>
+//               <Input
+//                 type="text"
+//                 name="lastName"
+//                 value={formData.lastName}
+//                 className="w-full bg-gray-800 h-11 rounded-lg p-3"
+//                 onChange={handleInputChange}
+//                 readOnly={!isEditing}
+//               />
+//             </div>
+//           </div>
+
+//           <div>
+//             <label className="block text-sm mb-2">College</label>
+//             <div className="relative">
+//               <Input
+//                 type="text"
+//                 name="college"
+//                 value={formData.college}
+//                 className="w-full h-11 bg-gray-800 rounded-lg p-3 pr-32"
+//                 onChange={handleInputChange}
+//                 readOnly={!isEditing}
+//               />
+//             </div>
+//           </div>
+//           <div>
+//             <label className="block text-sm mb-2">Phone Number</label>
+//             <div className="relative">
+//               <Input
+//                 type="text"
+//                 name="phoneNumber"
+//                 value={formData.phoneNumber}
+//                 className="w-full h-11 bg-gray-800 rounded-lg p-3 pr-32"
+//                 onChange={handleInputChange}
+//                 readOnly={!isEditing}
+//               />
+//             </div>
+//           </div>
+//         </div>
+//         <div className="flex justify-end gap-3 mt-8">
+//           <button
+//             className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+//             onClick={() => setIsEditing(!isEditing)}
+//           >
+//             {isEditing ? "Cancel" : "Edit"}
+//           </button>
+//           {isEditing && (
+//             <button
+//               className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+//               onClick={handleSaveChanges}
+//             >
+//               Submit
+//             </button>
+//           )}
+//         </div>
+//       </div>
+//     </Card>
+//   );
+// };
+
+// export default UserProfile;
+
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Check } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
-const UserProfile = ({ user }) => {
-  const [lastName, setValue] = React.useState("Samuel");
+const UserProfile = ({ user, userDetails: initialUserDetails }) => {
+  const [userDetails, setUserDetails] = useState(initialUserDetails);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: initialUserDetails.firstName,
+    lastName: initialUserDetails.lastName,
+    college: initialUserDetails.college,
+    phoneNumber: initialUserDetails.phoneNumber || "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleCancel = () => {
+    // Reset form data to current userDetails values
+    setFormData({
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      college: userDetails.college,
+      phoneNumber: userDetails.phoneNumber || "",
+    });
+    setIsEditing(false);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const refreshUserDetails = async () => {
+    try {
+      const response = await fetch(`/api/getUser?email=${user.email}`);
+      if (response.ok) {
+        const updatedDetails = await response.json();
+        setUserDetails(updatedDetails);
+        setFormData({
+          firstName: updatedDetails.firstName,
+          lastName: updatedDetails.lastName,
+          college: updatedDetails.college,
+          phoneNumber: updatedDetails.phoneNumber || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error refreshing user details:", error);
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const response = await fetch("/api/updateUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          ...formData,
+        }),
+      });
+
+      if (response.ok) {
+        // Refresh user details from the API
+        await refreshUserDetails();
+        setIsEditing(false);
+        alert("User details updated successfully!");
+      } else {
+        alert("Failed to update user details.");
+      }
+    } catch (error) {
+      console.error("Error updating user details:", error);
+      alert("An error occurred while updating user details.");
+    }
+  };
+
   return (
     <Card className="w-full max-w-xl bg-black/90 border-zinc-600 border-4 text-white rounded-[24px] p-6">
       <div className="relative">
-        {/* Background Image */}
-        {/* background-image: linear-gradient( 90deg, rgba(239, 176, 54, 1) 20%,
-    rgba(59, 103, 144, 1) 72% ); */}
         <div className="h-40 -mt-[16px] -mx-[16px] rounded-[16px] bg-gradient-to-r from-[#f05454] to-[#3282b8] opacity-100" />
-        {/* Close Button */}
-        {/* <button className="absolute right-0 top-0 text-gray-400 hover:text-white">
-          ×
-        </button> */}
-        {/* Profile Header */}
         <div className="relative items-center gap-4 mb-8">
           <div className="relative w-24 h-24">
             <img
@@ -26,23 +262,32 @@ const UserProfile = ({ user }) => {
               alt="Profile"
               className="w-24 h-24 -mt-[45px] rounded-full border-5 border-black "
             />
-            {/* <Check className="absolute bottom-0 right-0 text-blue-500 bg-white rounded-full p-1 w-6 h-6" /> */}
           </div>
 
           <div className="relative flex-1">
             <div className="flex items-center gap-4 mb-1">
-              <h2 className="text-2xl font-semibold">Leroy Samuel</h2>
+              <h2 className="text-2xl font-semibold">
+                {userDetails.firstName} {userDetails.lastName}
+              </h2>
             </div>
-            <p className="text-gray-400">leroypinto1977@gmail.com</p>
+            <p className="text-gray-400">{user.email}</p>
           </div>
         </div>
-        {/* Stats Grid */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           {[
-            { label: "Yuktaha ID", value: "YUK250001" },
-            { label: "Workshops registerd", value: "1" },
-            { label: "Technical events registered", value: "1" },
-            { label: "Non-Technical events", value: "0" },
+            { label: "Yuktaha ID", value: userDetails.yuktahaId },
+            {
+              label: "Workshops registered",
+              value: userDetails.workshopsRegistered,
+            },
+            {
+              label: "Technical events registered",
+              value: userDetails.technicalEventsRegistered,
+            },
+            {
+              label: "Non-Technical events",
+              value: userDetails.nonTechnicalEvents,
+            },
           ].map((stat) => (
             <div key={stat.label}>
               <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
@@ -50,25 +295,28 @@ const UserProfile = ({ user }) => {
             </div>
           ))}
         </div>
-        {/* Form Fields */}
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-2">First Name</label>
               <Input
                 type="text"
-                value="Leroy"
+                name="firstName"
+                value={formData.firstName}
                 className="w-full bg-gray-800 h-11 rounded-lg p-3"
-                // onValueChange={(value) => setValue(value)}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
               />
             </div>
             <div>
               <label className="block text-sm mb-2">Last Name</label>
               <Input
                 type="text"
-                value={lastName}
+                name="lastName"
+                value={formData.lastName}
                 className="w-full bg-gray-800 h-11 rounded-lg p-3"
-                // onChange={(value) => setValue("lastName", value)}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
               />
             </div>
           </div>
@@ -77,56 +325,55 @@ const UserProfile = ({ user }) => {
             <label className="block text-sm mb-2">College</label>
             <div className="relative">
               <Input
-                type="email"
-                value="PSG iTech"
+                type="text"
+                name="college"
+                value={formData.college}
                 className="w-full h-11 bg-gray-800 rounded-lg p-3 pr-32"
-                readOnly
+                onChange={handleInputChange}
+                readOnly={!isEditing}
               />
-              {/* <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-sm text-blue-400">
-                <Check className="w-4 h-4 mr-1" />
-                VERIFIED 2 JAN, 2025
-              </div> */}
             </div>
-          </div>
-
-          {/* <div>
-            <label className="block text-sm mb-2">Country</label>
-            <button className="w-full bg-gray-800 rounded-lg p-3 text-left flex items-center">
-              <img
-                src="/api/placeholder/24/24"
-                alt="US Flag"
-                className="w-6 h-6 rounded-full mr-2"
-              />
-              United States
-            </button>
           </div>
 
           <div>
-            <label className="block text-sm mb-2">Username</label>
-            <div className="flex rounded-lg overflow-hidden">
-              <div className="bg-gray-800 p-3 text-gray-400">
-                untitledui.com/
-              </div>
-              <input
-                type="text"
-                value="siennahewitt"
-                className="flex-1 bg-gray-800 p-3"
-                readOnly
+            <label className="block text-sm mb-2">Phone Number</label>
+            <div className="relative">
+              <Input
+                type="tel"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                className="w-full h-11 bg-gray-800 rounded-lg p-3 pr-32"
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                placeholder="Enter your phone number"
               />
-              <div className="bg-gray-800 p-3">
-                <Check className="w-5 h-5 text-blue-400" />
-              </div>
             </div>
-          </div> */}
+          </div>
         </div>
-        {/* Action Buttons */}
         <div className="flex justify-end gap-3 mt-8">
-          <button className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700">
-            Cancel
-          </button>
-          <button className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">
-            Save changes
-          </button>
+          {isEditing ? (
+            <>
+              <button
+                className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+                onClick={handleSaveChanges}
+              >
+                Submit
+              </button>
+            </>
+          ) : (
+            <button
+              className="px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+              onClick={handleEditClick}
+            >
+              Edit
+            </button>
+          )}
         </div>
       </div>
     </Card>
