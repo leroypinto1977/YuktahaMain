@@ -282,16 +282,18 @@ const UserProfile = ({ user, userDetails: initialUserDetails }) => {
             },
             {
               label: "Technical events registered",
-              value: userDetails.technicalEventsRegistered,
+              value: userDetails.teventsRegistered,
             },
             {
               label: "Non-Technical events",
-              value: userDetails.nonTechnicalEvents,
+              value: userDetails.nteventsRegistered,
             },
           ].map((stat) => (
             <div key={stat.label}>
-              <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
-              <p className="font-medium">{stat.value}</p>
+              <p className="text-gray-400 text-sm mb-1 text-center">
+                {stat.label}
+              </p>
+              <p className="font-medium text-center">{stat.value}</p>
             </div>
           ))}
         </div>

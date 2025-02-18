@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { BackgroundBeams } from "@/components/acertinity_ui/background-beams.jsx";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useParams } from "next/navigation";
 import React from "react";
 
@@ -9,6 +10,8 @@ const NonTechnicalEventDetail = () => {
   const [event, setEvent] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
+
+  const { user } = useKindeBrowserClient();
 
   const { eventid } = useParams();
   const numericEventId = eventid ? parseInt(eventid, 10) : null;
@@ -36,6 +39,83 @@ const NonTechnicalEventDetail = () => {
 
     fetchEvent();
   }, [numericEventId]);
+
+  const handleEventRegistration = async (user, numericEventId, eventType) => {
+    try {
+      // First fetch user details
+      const userResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/getUser?email=${user.email}`,
+        { cache: "no-store" }
+      );
+
+      if (!userResponse.ok) {
+        const errorData = await userResponse.text();
+        throw new Error(`Failed to fetch user details: ${errorData}`);
+      }
+
+      const userDetails = await userResponse.json();
+
+      // Prepare event registration payload
+      const registrationPayload = {
+        userDetails: {
+          yuktahaId: userDetails.yuktahaId,
+          firstName: userDetails.firstName,
+          email: userDetails.email,
+          phoneNumber: userDetails.phoneNumber,
+          college: userDetails.college,
+        },
+        eventId: numericEventId,
+      };
+
+      // Register for event
+      const endpoint =
+        eventType === "technical"
+          ? "/api/tevents/registerTevents"
+          : "/api/ntevents/registerNTevents";
+
+      const eventResponse = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registrationPayload),
+      });
+
+      // Parse response
+      const responseText = await eventResponse.text();
+      let eventData;
+      try {
+        eventData = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Failed to parse response:", responseText);
+        throw new Error("Invalid response format");
+      }
+
+      if (eventResponse.ok) {
+        alert("Event registered successfully!");
+        return {
+          success: true,
+          message: "Event registered successfully!",
+          data: eventData,
+        };
+      } else {
+        alert(eventData.message || "Failed to register for event");
+        return {
+          success: false,
+          message: eventData.message,
+          error: eventData,
+        };
+      }
+    } catch (error) {
+      console.error("Error registering for event:", error);
+      alert("An error occurred while registering for the event.");
+      return {
+        success: false,
+        message: "An error occurred while registering for the event.",
+        error: error.message,
+      };
+    }
+  };
 
   if (loading) {
     return (
@@ -167,6 +247,9 @@ const NonTechnicalEventDetail = () => {
           <div className="mt-8">
             <button
               disabled={!event.open}
+              onClick={() =>
+                handleEventRegistration(user, numericEventId, "non-technical")
+              }
               className={`px-8 py-3 rounded-lg text-white transition-opacity ${
                 event.open && event.availability > 0
                   ? "bg-gradient-to-l from-[rgb(50,130,184)] to-[#f05454] hover:opacity-90"

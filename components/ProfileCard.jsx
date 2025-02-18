@@ -55,6 +55,7 @@ const ProfileCard = ({ item, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.3 }}
       whileHover={{ scale: 1 }}
+      viewport={{ once: true }}
     >
       <Card className="bg-zinc-900 border-zinc-800 h-full border-3 rounded-3xl hover:border-zinc-700 transition-all duration-300 overflow-hidden">
         <CardHeader className="p-0">
