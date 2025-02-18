@@ -66,6 +66,8 @@
 // export default mongoose.models.UserDetails ||
 //   mongoose.model("UserDetails", UserDetailsSchema, "User-Details");
 
+// models/UserDetails.js
+
 import mongoose from "mongoose";
 import AutoIncrementFactory from "mongoose-sequence";
 

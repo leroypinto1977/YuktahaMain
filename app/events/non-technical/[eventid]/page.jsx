@@ -1,3 +1,5 @@
+// app/events/non-technical/[eventid]/page.jsx
+
 "use client";
 
 import Navbar from "@/components/Navbar";

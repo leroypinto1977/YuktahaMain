@@ -1,3 +1,4 @@
+// ProfileCard.jsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -16,10 +17,10 @@ const ProfileCard = ({ item, index }) => {
   // Generate link based on event type
   const eventLink =
     eventType === "workshop"
-      ? `/workshops/${eventId}`
+      ? `/profile/wk/${eventId}`
       : eventType === "technical"
-      ? `/events/technical/${eventId}`
-      : `/events/non-technical/${eventId}`;
+      ? `/profile/te/${eventId}`
+      : `/profile/nte/${eventId}`;
 
   // Get badge styling based on event type
   const getBadgeStyle = () => {
