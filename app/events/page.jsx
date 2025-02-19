@@ -161,7 +161,7 @@ const Events = () => {
 
     if (
       !lastAnimationEventTime ||
-      currentTime - parseInt(lastAnimationEventTime) > 10 * 60 * 1000
+      currentTime - parseInt(lastAnimationEventTime) > 0 * 60 * 1000
     ) {
       setShouldEventsAnimate(true);
       localStorage.setItem("lastAnimationEventTime", currentTime.toString());

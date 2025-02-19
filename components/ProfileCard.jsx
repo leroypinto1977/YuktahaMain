@@ -19,8 +19,8 @@ const ProfileCard = ({ item, index }) => {
     eventType === "workshop"
       ? `/profile/wk/${eventId}`
       : eventType === "technical"
-      ? `/profile/te/${eventId}`
-      : `/profile/nte/${eventId}`;
+      ? `/te/${eventId}`
+      : `/nte/${eventId}`;
 
   // Get badge styling based on event type
   const getBadgeStyle = () => {

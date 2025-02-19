@@ -4,6 +4,7 @@
 import NavbarTabs from "./NavbarTabs";
 import UserDropdown from "./UserDropdown";
 import { Button } from "@/components/ui/button";
+import { shouldHideNavbar } from "@/utils/hideNavbarRoutes";
 import {
   RegisterLink,
   LoginLink,
@@ -14,6 +15,10 @@ import { usePathname } from "next/navigation";
 export default function NavbarClient({ authenticated, user }) {
   const pathname = usePathname();
   console.log("pathname:", pathname);
+
+  // if (shouldHideNavbar(pathname)) {
+  //   return null;
+  // }
 
   if (pathname !== "/") {
     if (pathname === "/events" || pathname === "/workshops") {
