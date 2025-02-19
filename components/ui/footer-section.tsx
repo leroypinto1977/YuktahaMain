@@ -39,11 +39,10 @@ function FooterMain() {
       <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight">
-              Stay Connected
-            </h2>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight">Yuktaha</h2>
             <p className="mb-6 text-muted-foreground">
-              Join our newsletter for the latest updates and exclusive offers.
+              Stay alert for exciting updates to the biggest technical event in
+              Coimbatore.
             </p>
             {/* <form className="relative">
               <Input
@@ -66,7 +65,7 @@ function FooterMain() {
             <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
             <nav className="space-y-2 text-sm">
               <a
-                href="#"
+                href="/"
                 className="block transition-colors hover:text-primary"
               >
                 Home
@@ -75,19 +74,19 @@ function FooterMain() {
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                About Us
+                Wokshops
               </a>
               <a
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                Services
+                Events
               </a>
               <a
                 href="#"
                 className="block transition-colors hover:text-primary"
               >
-                Products
+                Dev Team
               </a>
               <a
                 href="#"
@@ -98,12 +97,12 @@ function FooterMain() {
             </nav>
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Location</h3>
             <address className="space-y-2 text-sm not-italic">
-              <p>123 Innovation Street</p>
-              <p>Tech City, TC 12345</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@example.com</p>
+              <p>PSG iTech</p>
+              <p>Coimbatore</p>
+              <p>Phone: +91 93446 27455</p>
+              <p>Email: leroypinto1977@gmail.com</p>
             </address>
           </div>
           <div className="relative">
@@ -178,7 +177,7 @@ function FooterMain() {
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <Sun className="h-4 w-4" />
               <Switch
                 id="dark-mode"
@@ -189,7 +188,7 @@ function FooterMain() {
               <Label htmlFor="dark-mode" className="sr-only">
                 Toggle dark mode
               </Label>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">

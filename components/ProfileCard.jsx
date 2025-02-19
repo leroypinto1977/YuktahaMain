@@ -17,7 +17,7 @@ const ProfileCard = ({ item, index }) => {
   // Generate link based on event type
   const eventLink =
     eventType === "workshop"
-      ? `/profile/wk/${eventId}`
+      ? `/wk/${eventId}`
       : eventType === "technical"
       ? `/te/${eventId}`
       : `/nte/${eventId}`;
@@ -89,7 +89,6 @@ const ProfileCard = ({ item, index }) => {
         <CardFooter className="flex justify-end p-4">
           <Button
             className="group items-center"
-            variant="secondary"
             onClick={() => {
               window.location.href = eventLink;
             }}
